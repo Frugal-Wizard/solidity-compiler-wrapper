@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install",
+			"type": "shell",
+			"command": "npm install --no-save"
+		},
+		{
+			"label": "Build",
+			"type": "npm",
+			"script": "prepare",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
