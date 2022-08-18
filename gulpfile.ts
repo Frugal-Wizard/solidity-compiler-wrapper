@@ -1,9 +1,12 @@
 import { series } from 'gulp';
-import del from 'del';
 import { spawn } from 'child_process';
+import rimraf from 'rimraf';
+import { promisify } from 'util';
+
+const promisifiedRimraf = promisify(rimraf);
 
 export async function clean() {
-    await del([ 'dist/**' ]);
+    await promisifiedRimraf('dist/**');
 }
 
 export function compileTypescript() {
