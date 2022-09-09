@@ -7,7 +7,9 @@
   "main": "dist/solidity-compiler.js",
   "repository": "https://github.com/TheOrderbookDEX/solidity-compiler.git",
   "scripts": {
-    "prepare": "gulp"
+    "prepare": "gulp",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "solc": "0.8.17"
