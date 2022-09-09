@@ -22,6 +22,7 @@ export interface CompilerSettings {
             };
         };
     };
+    viaIR?: boolean;
     evmVersion?: 'homestead' | 'tangerineWhistle' | 'spuriousDragon' | 'byzantium' | 'constantinople' | 'petersburg' | 'istanbul' | 'berlin';
 }
 
