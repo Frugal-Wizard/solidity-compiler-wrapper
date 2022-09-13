@@ -45,6 +45,20 @@ export interface CompiledContracts {
     }
 }
 
+export const JSON_INPUT = Symbol('jsonInput');
+
+export interface CompileResult extends CompiledContracts {
+    [JSON_INPUT]: {
+        language: 'Solidity';
+        sources: {
+            [path: string]: {
+                content: string;
+            };
+        };
+        settings: CompilerSettings;
+    };
+}
+
 export type ABISpecification
     = ABIFunctionSpecification
     | ABIConstructorSpecification
@@ -110,11 +124,11 @@ interface CompilerOutput {
     }[];
 }
 
-export function compileSolidity(basepath: string, sourcefile: string): CompiledContracts;
-export function compileSolidity(basepath: string, sourcefile: string, settings: CompilerSettings): CompiledContracts;
-export function compileSolidity(basepath: string, sourcefile: string, contents: Buffer): CompiledContracts;
-export function compileSolidity(basepath: string, sourcefile: string, contents: Buffer, settings: CompilerSettings): CompiledContracts;
-export function compileSolidity(basepath: string, sourcefile: string, contentsOrSettings?: Buffer | CompilerSettings, settings?: CompilerSettings): CompiledContracts {
+export function compileSolidity(basepath: string, sourcefile: string): CompileResult;
+export function compileSolidity(basepath: string, sourcefile: string, settings: CompilerSettings): CompileResult;
+export function compileSolidity(basepath: string, sourcefile: string, contents: Buffer): CompileResult;
+export function compileSolidity(basepath: string, sourcefile: string, contents: Buffer, settings: CompilerSettings): CompileResult;
+export function compileSolidity(basepath: string, sourcefile: string, contentsOrSettings?: Buffer | CompilerSettings, settings?: CompilerSettings): CompileResult {
     let contents: Buffer | undefined;
     if (contentsOrSettings) {
         if (contentsOrSettings instanceof Buffer) {
@@ -126,13 +140,14 @@ export function compileSolidity(basepath: string, sourcefile: string, contentsOr
     if (!contents) contents = readFileSync(resolve(basepath, sourcefile));
     if (!settings) settings = {};
     const require = createRequire(resolve(basepath, sourcefile));
+    const sources = {
+        [sourcefile]: {
+            content: contents.toString()
+        }
+    };
     const output: CompilerOutput = JSON.parse(solc.compile(JSON.stringify({
         language: 'Solidity',
-        sources: {
-            [sourcefile]: {
-                content: contents.toString()
-            }
-        },
+        sources,
         settings: {
             ...settings,
             outputSelection: {
@@ -149,9 +164,9 @@ export function compileSolidity(basepath: string, sourcefile: string, contentsOr
             } catch {
                 sourcefile = resolve(basepath, path);
             }
-            return {
-                contents: readFileSync(sourcefile).toString()
-            };
+            const contents = readFileSync(sourcefile).toString();
+            sources[path] = { content: contents };
+            return { contents };
         }
     }));
     if (output.errors) {
@@ -173,7 +188,14 @@ export function compileSolidity(basepath: string, sourcefile: string, contentsOr
             throw new Error(`solc: failed to compile ${join(basepath, sourcefile)}`);
         }
     }
-    return output.contracts[sourcefile];
+    return {
+        ...output.contracts[sourcefile],
+        [JSON_INPUT]: {
+            language: 'Solidity',
+            sources,
+            settings,
+        },
+    };
 }
 
 export default compileSolidity;
