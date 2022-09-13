@@ -1,6 +1,6 @@
 {
   "name": "@theorderbookdex/solidity-compiler",
-  "version": "0.8.17",
+  "version": "0.8.17+1",
   "description": "This is a just a wrapper for solc-js meant to simplify its use in build tasks and provide some functionality usually expected when handling Solidity projects",
   "license": "MIT",
   "author": "Frugal-Wizard",
