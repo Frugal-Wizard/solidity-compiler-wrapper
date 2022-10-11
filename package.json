@@ -1,11 +1,11 @@
 {
-  "name": "@theorderbookdex/solidity-compiler",
+  "name": "@frugal-wizard/solidity-compiler",
   "version": "0.8.17-1.1.0",
   "description": "This is a just a wrapper for solc-js meant to simplify its use in build tasks and provide some functionality usually expected when handling Solidity projects",
   "license": "MIT",
   "author": "Frugal-Wizard",
   "main": "dist/solidity-compiler.js",
-  "repository": "https://github.com/TheOrderbookDEX/solidity-compiler.git",
+  "repository": "https://github.com/Frugal-Wizard/solidity-compiler-wrapper.git",
   "scripts": {
     "prepare": "gulp",
     "lint": "eslint . --ext .ts",
