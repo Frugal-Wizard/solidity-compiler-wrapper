@@ -18,7 +18,7 @@ So, use at your own discretion and don't rely on its interface staying backward 
 ## How do I use this?
 
 ```typescript
-import compileSolidity from '@theorderbookdex/solidity-compiler';
+import compileSolidity from '@frugal-wizard/solidity-compiler-wrapper';
 
 const compiled = compileSolidity('path/to/contracts', 'Contract.sol', { optimizer: { enabled: true } });
 
