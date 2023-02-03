@@ -1,6 +1,6 @@
 {
   "name": "@frugal-wizard/solidity-compiler-wrapper",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "This is a just a wrapper for solc-js meant to simplify its use in build tasks and provide some functionality usually expected when handling Solidity projects",
   "license": "MIT",
   "author": "Frugal-Wizard",
