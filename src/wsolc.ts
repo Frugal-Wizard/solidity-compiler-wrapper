@@ -2,7 +2,7 @@
 
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import solc, { JSON_INPUT } from './solidity-compiler';
+import solc, { EVMVersion, JSON_INPUT } from './solidity-compiler';
 import glob from 'glob';
 import { mkdirSync, writeFileSync } from 'fs';
 import { basename, dirname, join } from 'path';
@@ -30,6 +30,14 @@ yargs(hideBin(process.argv))
                     describe: 'Output prettified JSON',
                     type: 'boolean',
                 },
+                viaIR: {
+                    describe: 'Change compilation pipeline to go through the Yul intermediate representation',
+                    type: 'boolean',
+                },
+                evmVersion: {
+                    describe: 'Version of the EVM to compile for',
+                    choices: Object.values(EVMVersion),
+                },
             });
     }, (argv) => {
         const {
@@ -38,18 +46,22 @@ yargs(hideBin(process.argv))
             saveInputJson = false,
             optimize = false,
             prettyJson = false,
+            viaIR = false,
+            evmVersion,
         } = argv as unknown as {
             contractsDir: string;
             outputDir?: string;
             saveInputJson?: boolean;
             optimize?: boolean;
             prettyJson?: boolean;
+            viaIR?: boolean;
+            evmVersion?: EVMVersion;
         };
         for (const contractFile of glob.sync('**/*.sol', { cwd: contractsDir })) {
             console.log(`Compiling ${join(contractsDir, contractFile)}...`);
             const outputFile = join(outputDir, dirname(contractFile), basename(contractFile, '.sol'));
             mkdirSync(dirname(outputFile), { recursive: true });
-            const output = solc(contractsDir, contractFile, { optimizer: { enabled: optimize } });
+            const output = solc(contractsDir, contractFile, { optimizer: { enabled: optimize }, viaIR, evmVersion });
             writeFileSync(
                 `${outputFile}.json`,
                 JSON.stringify(output, null, prettyJson ? 2 : undefined)

@@ -3,6 +3,20 @@ import { resolve, join } from 'path';
 import { readFileSync } from 'fs';
 import { createRequire } from 'module';
 
+export enum EVMVersion {
+    HOMESTEAD         = 'homestead',
+    TANGERINE_WHISTLE = 'tangerineWhistle',
+    SPURIOUS_DRAGON   = 'spuriousDragon',
+    BYZANTIUM         = 'byzantium',
+    CONSTANTINOPLE    = 'constantinople',
+    PETERSBURG        = 'petersburg',
+    ISTANBUL          = 'istanbul',
+    BERLIN            = 'berlin',
+    LONDON            = 'london',
+    PARIS             = 'paris',
+    SHANGHAI          = 'shanghai',
+}
+
 export interface CompilerSettings {
     optimizer?: {
         enabled?: boolean;
@@ -23,7 +37,7 @@ export interface CompilerSettings {
         };
     };
     viaIR?: boolean;
-    evmVersion?: 'homestead' | 'tangerineWhistle' | 'spuriousDragon' | 'byzantium' | 'constantinople' | 'petersburg' | 'istanbul' | 'berlin';
+    evmVersion?: EVMVersion | `${EVMVersion}`;
 }
 
 export interface CompiledContracts {
