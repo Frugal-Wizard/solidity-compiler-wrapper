@@ -1,0 +1,10 @@
+{
+  "timeout": 0,
+  "slow": 100000,
+  "require": [
+    "ts-node/register"
+  ],
+  "extension": [
+    "spec.ts"
+  ]
+}

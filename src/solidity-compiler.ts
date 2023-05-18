@@ -1,7 +1,11 @@
-import solc from 'solc';
 import { resolve, join } from 'path';
 import { readFileSync } from 'fs';
 import { createRequire } from 'module';
+
+const solc: {
+    compile(input: string, options: { import: (path: string) => { contents: string } }): string;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+} = require('solc');
 
 export enum EVMVersion {
     HOMESTEAD         = 'homestead',
