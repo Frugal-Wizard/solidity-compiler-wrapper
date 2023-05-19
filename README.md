@@ -34,3 +34,28 @@ const contract = new web3.eth.Contract(compiled['Contract'].abi);
 
 contract.deploy(compiled['Contract'].evm.bytecode.object);
 ```
+
+## How do I use the CLI command?
+
+```
+wsolc <contractsDir>
+
+compile solitidy files
+
+Positionals:
+  contractsDir  Contracts folder
+
+Options:
+  --help           Show help                                           [boolean]
+  --version        Show version number                                 [boolean]
+  --outputDir      Output folder                       [default: <contractsDir>]
+  --saveInputJson  Save input JSON                                     [boolean]
+  --optimize       Enable optimizer                                    [boolean]
+  --prettyJson     Output prettified JSON                              [boolean]
+  --viaIR          Change compilation pipeline to go through the Yul
+                   intermediate representation                         [boolean]
+  --evmVersion     Version of the EVM to compile for
+       [choices: "homestead", "tangerineWhistle", "spuriousDragon", "byzantium",
+        "constantinople", "petersburg", "istanbul", "berlin", "london", "paris",
+                                                                     "shanghai"]
+```
