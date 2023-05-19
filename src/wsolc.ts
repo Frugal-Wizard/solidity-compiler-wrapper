@@ -3,7 +3,7 @@
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import solc, { EVMVersion, JSON_INPUT } from './solidity-compiler';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { mkdirSync, writeFileSync } from 'fs';
 import { basename, dirname, join } from 'path';
 
@@ -57,7 +57,7 @@ yargs(hideBin(process.argv))
             viaIR?: boolean;
             evmVersion?: EVMVersion;
         };
-        for (const contractFile of glob.sync('**/*.sol', { cwd: contractsDir })) {
+        for (const contractFile of globSync('**/*.sol', { cwd: contractsDir })) {
             console.log(`Compiling ${join(contractsDir, contractFile)}...`);
             const outputFile = join(outputDir, dirname(contractFile), basename(contractFile, '.sol'));
             mkdirSync(dirname(outputFile), { recursive: true });

@@ -23,12 +23,11 @@
     "solc": "^0.8"
   },
   "dependencies": {
-    "glob": "^8.1.0",
+    "glob": "^10.2.5",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/chai": "^4.3.5",
-    "@types/glob": "^8.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.18",
     "@types/yargs": "^17.0.22",
